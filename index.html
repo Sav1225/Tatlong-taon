@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Love Story ❤️</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Segoe UI',sans-serif;background:#0f0f1a;color:white;overflow-x:hidden;}
+section{min-height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;padding:40px 20px;position:relative;z-index:2;}
+.hero{background:linear-gradient(135deg,#ff4e8a,#6a5cff);} 
+.first-photo{background:linear-gradient(135deg,#1a1a2e,#16213e);} 
+h1{font-size:3em;margin-bottom:15px;} 
+p{max-width:700px;line-height:1.7;} 
+
+/* MUSIC BUTTON */
+.music-btn{position:fixed;bottom:20px;right:20px;background:#ff4e8a;border:none;padding:12px 16px;border-radius:50%;cursor:pointer;z-index:1000;color:white;font-size:18px;}
+
+/* CAROUSEL */
+.carousel{position:relative;width:90%;max-width:900px;overflow:hidden;border-radius:15px;}
+.track{display:flex;transition:.6s ease;}
+.track img{width:100%;height:300px;object-fit:cover;flex-shrink:0;cursor:pointer;}
+.btn{position:absolute;top:50%;transform:translateY(-50%);background:#0006;color:white;border:none;font-size:20px;padding:10px;cursor:pointer;}
+.prev{left:10px;} .next{right:10px;}
+
+/* FULLSCREEN IMAGE */
+.viewer{position:fixed;top:0;left:0;width:100%;height:100%;background:#000e;display:none;justify-content:center;align-items:center;z-index:9999;}
+.viewer img{max-width:90%;max-height:90%;border-radius:10px;}
+
+.special-box{max-width:500px;width:100%;background:rgba(255,255,255,0.08);padding:20px;border-radius:25px;box-shadow:0 0 25px rgba(255,105,180,0.4);animation:glow 2s infinite alternate;}
+.special-box img{width:100%;border-radius:20px;margin-bottom:15px;}
+
+.gallery-text{margin-top:10px;font-size:1.2em;}
+
+.letters-section{background:linear-gradient(135deg,#1c1035,#34124d);} 
+.letters-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;width:90%;max-width:1000px;margin-top:20px;} 
+.letter-btn{background:rgba(255,255,255,0.08);border:none;color:white;padding:18px;border-radius:18px;font-size:1.1em;cursor:pointer;transition:0.3s;} 
+.letter-btn:hover{transform:translateY(-5px);background:rgba(255,105,180,0.25);} 
+
+.popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);display:none;justify-content:center;align-items:center;z-index:999;padding:20px;} 
+.popup-content{background:#161625;width:100%;max-width:700px;max-height:85vh;overflow-y:auto;padding:30px;border-radius:25px;text-align:left;box-shadow:0 0 30px rgba(255,105,180,0.4);} 
+.popup-content p{white-space:pre-line;}
+.close-btn{display:block;margin:0 auto 20px;background:#ff4e8a;border:none;color:white;padding:10px 20px;border-radius:12px;cursor:pointer;} 
+
+.hearts{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;} 
+.heart{position:absolute;color:pink;animation:float 5s linear infinite;} 
+@keyframes float{0%{transform:translateY(100vh);opacity:1;}100%{transform:translateY(-10vh);opacity:0;}} 
+@keyframes glow{from{box-shadow:0 0 15px rgba(255,105,180,0.3);}to{box-shadow:0 0 35px rgba(255,105,180,0.8);}} 
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="bgMusic" loop>
+<source src="your-music.mp3" type="audio/mpeg">
+</audio>
+<button class="music-btn" onclick="toggleMusic()">🎵</button>
+
+<div class="hearts" id="hearts"></div>
+
+<section class="hero">
+<h1>Happy 3 Year Anniversary ❤️</h1>
+<p>Every moment with you is my favorite memory Babu.</p>
+</section>
+
+<section class="first-photo">
+<h1>Our First Photo 📸❤️</h1>
+<div class="special-box">
+<img src="1682254873283.jpg">
+<p>This was the beginning of everything beautiful.</p>
+</div>
+</section>
+
+<section>
+<h1>My Favorite Memories 📸</h1>
+<div class="carousel">
+<div class="track" id="track">
+<img src="4d205d6f-9a77-48fd-b00e-04d8c80a4ed8.jpg" onclick="viewImg(this.src)">
+<img src="IMG_20230501_155104.jpg" onclick="viewImg(this.src)">
+<img src="e8806007-a935-44a4-8db9-d9c29c946858.jpg" onclick="viewImg(this.src)">
+<img src="e8197e11-74e9-4fd6-a6cb-bb0594471a1d.jpg" onclick="viewImg(this.src)">
+<img src="4af99104-5ca3-45da-9233-2cb0cc7ece7b.jpg" onclick="viewImg(this.src)">
+</div>
+<button class="btn prev" onclick="move(-1)">❮</button>
+<button class="btn next" onclick="move(1)">❯</button>
+</div>
+<div class="gallery-text">I can't find more pictures 😭</div>
+</section>
+
+<!-- FULLSCREEN VIEWER -->
+<div class="viewer" id="viewer" onclick="closeViewer()">
+<img id="viewerImg">
+</div>
+
+<section class="letters-section">
+<h1>Love Letters written when you come accross my mind for this day 💌</h1>
+<div class="letters-grid">
+<button class="letter-btn" onclick="openLetter(1)">Letter 1</button>
+<button class="letter-btn" onclick="openLetter(2)">Letter 2</button>
+<button class="letter-btn" onclick="openLetter(3)">Letter 3</button>
+<button class="letter-btn" onclick="openLetter(4)">Letter 4</button>
+<button class="letter-btn" onclick="openLetter(5)">Letter 5</button>
+<button class="letter-btn" onclick="openLetter(6)">Letter 6</button>
+<button class="letter-btn" onclick="openLetter(7)">Letter 7</button>
+</div>
+<h1>Sorry if this are not physical letters</h1>
+</section>
+
+<div class="popup" id="popup">
+<div class="popup-content">
+<button class="close-btn" onclick="closeLetter()">Close</button>
+<h2 id="popupTitle">Love Letter</h2>
+<p id="popupText"></p>
+</div>
+</div>
+
+<script>
+// music control
+function toggleMusic(){
+ const m=document.getElementById("bgMusic");
+ if(m.paused){m.play();}else{m.pause();}
+}
+
+// hearts
+function createHeart(){
+ const h=document.createElement("div");
+ h.className="heart";
+ h.innerHTML="❤️";
+ h.style.left=Math.random()*100+"vw";
+ h.style.fontSize=(Math.random()*20+10)+"px";
+ document.getElementById("hearts").appendChild(h);
+ setTimeout(()=>h.remove(),5000);
+}
+setInterval(createHeart,300);
+
+// carousel
+let index=0;
+function move(dir){
+ const track=document.getElementById("track");
+ const total=track.children.length;
+ index=(index+dir+total)%total;
+ track.style.transform=`translateX(-${index*100}%)`;
+}
+setInterval(()=>move(1),4000);
+
+// image viewer
+function viewImg(src){
+ document.getElementById("viewer").style.display="flex";
+ document.getElementById("viewerImg").src=src;
+}
+function closeViewer(){document.getElementById("viewer").style.display="none";}
+
+// typing effect
+function typeText(text,el){
+ el.innerHTML="";
+ let i=0;
+ let speed=15;
+ let timer=setInterval(()=>{
+  el.innerHTML+=text.charAt(i);
+  i++;
+  if(i>=text.length) clearInterval(timer);
+ },speed);
+}
+
+// LETTERS (UNCHANGED)
+const letters = {
+1:`My Dearest Babu,
+
+Three years with you, and somehow you still manage to amaze me. That takes talent, because most people become predictable after a week. You never did. From the first day until now, you’ve carried yourself with this confidence that turns heads without even trying. You walk like you know your worth, and you should, because you are worth so much.
+
+I love how independent you are, how you handle things with strength, how you don’t wait for the world to hand you anything. I admire your beauty, but more than that, I admire the way your heart stays soft in a hard world. You are talented, charismatic, and unforgettable. Even your hair somehow deserves its own fan club.
+
+We’ve been through storms together. We’ve made mistakes, felt pain, forgiven, learned, and stayed. That means something. Love that survives hardship is never ordinary.
+
+This anniversary, I want you to know I still choose you. Not because it’s easy, but because you are worth choosing again and again.
+
+Forever yours.`,
+
+2:`To My Beautiful La Reine,
+
+Three years ago, life became brighter because you entered it. Annoying how one person can have that much influence, but here we are. Since then, every memory feels touched by you.
+
+I love the way you carry yourself with grace and confidence. You don’t need anyone to complete you, and that’s one of the reasons I love you so much. You are whole on your own, yet you still let me be part of your world. That is a gift I never take lightly.
+
+You are beautiful in ways words fail to explain. Your smile, your hair, your presence, the energy you bring into every room. But your biggest beauty is your heart. You care deeply, love deeply, and feel deeply.
+
+We’ve been through things that could have broken us. Somehow, we found our way forward. Forgiveness is not weakness, it is love choosing healing.
+
+This year, I don’t just want to love you. I want to love you better.
+
+Happy anniversary, Babu.`,
+
+3:`My Sweet Babu,
+
+If I had to describe you in one word, I couldn’t. You are too much for one word. Confident. Talented. Beautiful. Strong. Kind. Magnetic. Dangerous to my peace of mind.
+
+I love watching you be yourself. The way you move, the way you speak, the way you know exactly who you are. That kind of confidence cannot be faked. It comes from something real inside you, and I admire it every day.
+
+Three years together means we’ve seen each other at our best and worst. We’ve hurt, healed, laughed, fought, and grown. We know love is not always soft music and sunsets. Sometimes it is patience, tears, honesty, and staying when it matters.
+
+You made me stronger. You made me wiser. You made me understand that real love isn’t perfect, it is persistent.
+
+Thank you for being my La Reine, my queen, my Babu.`,
+
+4:`To The Woman I Love,
+
+You have this charisma that can’t be taught. Some people beg for attention, but attention naturally finds you. You shine without trying, and it’s honestly unfair to the rest of humanity.
+
+I love your independence. I love that you can stand on your own feet. I love that your beauty is matched by your strength. I love that your talent keeps growing. I love your heart, because despite everything life throws at you, you still know how to care.
+
+We’ve had hard moments. We’ve made painful memories too. But even through those chapters, I saw something worth fighting for in you and in us. Forgiveness was not easy, but love rarely is.
+
+Three years later, I’m still here, still loving you, still wanting more with you.
+
+Happy anniversary, Babu.`,
+
+5:`My La Reine,
+
+Every time I look at you, I remember how lucky I am to know you this deeply. Most people only see your beauty. They see your face, your hair, your style, the way you carry yourself. But I get to know the layers beneath all that.
+
+I know your strength. I know your softness. I know the heart that keeps giving even when tired. I know the woman who keeps going no matter what. That version of you is the one I love most.
+
+Three years is not a small thing. We earned these years. Through pain, through lessons, through moments where lesser love would have ended. But we’re still here.
+
+And now I want to become better for you too. Better in how I love, how I listen, how I understand, how I protect what we have.
+
+Happy anniversary, Babu.`,
+
+6:`To My Babu, My Home,
+
+There is something peaceful about loving you, even when life around us becomes chaos. Somehow, even after everything, you still feel like home to me. Strange species, humans, finding homes inside each other.
+
+I love your confidence. I love how you never shrink yourself for anyone. I love your independence and how capable you are. I love your talent and the spark you bring into everything you do. I love your beauty, but more than that, I love your soul.
+
+We’ve gone through pain and mistakes. We know what hurt feels like. But we also know what forgiveness looks like, what growth looks like, what second chances can become.
+
+Thank you for staying and allowing me to stay too.
+
+Happy 3 years, La Reine.`,
+
+7:`My Forever Love,
+
+Happy anniversary to the woman who changed me. Loving you taught me patience, resilience, forgiveness, and depth. It taught me that love is not just words, it is choice after choice after choice.
+
+I choose your smile. I choose your beautiful heart. I choose your confidence, your independence, your talent, your hair I secretly admire more than I should, your charisma, and the way you carry yourself like royalty.
+
+I choose us, even after everything we’ve been through. Because real love is not pretending pain never happened. It is deciding healing matters more than pride.
+
+Three years with you is only the beginning I want. And this year, I want to love you even better than before. Smarter, softer, stronger, deeper.
+
+Happy anniversary, my La Reine.
+Always your Babu’s fool.`
+};
+function openLetter(num){
+ document.getElementById("popup").style.display="flex";
+ document.getElementById("popupTitle").innerText="Love Letter " + num;
+ typeText(letters[num],document.getElementById("popupText"));
+}
+function closeLetter(){document.getElementById("popup").style.display="none";}
+window.onclick=function(e){if(e.target.id==="popup") closeLetter();}
+</script>
+
+</body>
+</html>
